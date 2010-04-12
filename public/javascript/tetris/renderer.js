@@ -20,30 +20,19 @@ tetris.renderer = function(drawingCanvas) {
     context.strokeRect(x_offset, y_offset, t(stage.width), t(stage.height));
   }
 
-  var render_square = function(square) {
-    context.fillStyle   = '#ff0';
-
-    context.fillRect(
-      x_offset + t(square.x),
-      y_offset + t(square.y),
-      t(square.width),
-      t(square.height)
-    );
-  };
-
-  var render_tee = function(tee) {
-    var boxes = tee.get_boxes();
+  var render_piece = function(piece) {
+    var boxes = piece.get_boxes();
     var x;
     var y;
 
-    context.fillStyle   = '#0ff';
+    context.fillStyle   = '#ff0';
     
     for (var i = 0; i < boxes.length; i += 1) {
       x = boxes[i][0];
       y = boxes[i][1];
       context.fillRect(
-        x_offset + t(tee.x + x),
-        y_offset + t(tee.y + y),
+        x_offset + t(piece.x + x),
+        y_offset + t(piece.y + y),
         t(1),
         t(1)
       );
@@ -52,7 +41,6 @@ tetris.renderer = function(drawingCanvas) {
 
   return {
     render_stage: render_stage,
-    render_square: render_square,
-    render_tee: render_tee
+    render_piece: render_piece
   };
 };

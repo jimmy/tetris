@@ -9,21 +9,18 @@
         var renderer = tetris.renderer(drawingCanvas);
 
         var stage = tetris.stage;
-        var square = tetris.pieces.square(5, 0);
-        square.move();
-        square.move();
-        square.move();
-        square.move();
-        var tee = tetris.pieces.tee(5, 0);
+        var square = tetris.pieces.square();
+        var tee = tetris.pieces.tee();
 
         var draw = function() {
           renderer.render_stage(stage);
-          square.move();
-          tee.move();
-          renderer.render_square(square);
+          square.down();
+          tee.down();
+          renderer.render_piece(square);
           tee.rotate_right();
-          renderer.render_tee(tee);
+          renderer.render_piece(tee);
         };
+        draw();
         setInterval(draw, 500);
       });
     </script>
