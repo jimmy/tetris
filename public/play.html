@@ -8,19 +8,16 @@
         var drawingCanvas = document.getElementById('tetris');
         var renderer = tetris.renderer(drawingCanvas);
 
-        var stage = tetris.stage;
-        var active_piece = tetris.pieces.l();
+        var physics = tetris.physics;
+        physics.spawn();
 
         var draw = function() {
-          renderer.render_stage(stage);
-          renderer.render_piece(active_piece);
+          renderer.render_stage(physics.stage);
+          renderer.render_piece(physics.get_active_piece());
         };
 
         var tick = function() {
-          active_piece.down();
-          if (active_piece.y > stage.height) {
-            active_piece = tetris.pieces.random();
-          }
+          physics.down_and_stuff();
           draw();
         };
 
@@ -29,26 +26,22 @@
         $('body').keypress(function(e) {
           switch(e.keyCode) {
             case 106: // j
-              active_piece.down();
+              physics.down_and_stuff();
               break;
             case 107: // k
-              active_piece.down();
-              active_piece.down();
-              active_piece.down();
-              active_piece.down();
-              active_piece.down();
+              physics.drop();
               break;
             case 104: // h
-              active_piece.left();
+              physics.left();
               break;
             case 108: // l
-              active_piece.right();
+              physics.right();
               break;
             case 97: // a
-              active_piece.rotate_left();
+              physics.rotate_left();
               break;
             case 102: // f
-              active_piece.rotate_right();
+              physics.rotate_right();
               break;
           }
           draw();
@@ -56,9 +49,10 @@
       });
     </script>
     <script src='/javascript/tetris/rotator.js'></script>
+    <script src='/javascript/tetris/stage.js'></script>
+    <script src='/javascript/tetris/physics.js'></script>
     <script src='/javascript/tetris/pieces.js'></script>
     <script src='/javascript/tetris/renderer.js'></script>
-    <script src='/javascript/tetris/stage.js'></script>
   </head>
   <body>
     <canvas id='tetris' width='800' height='600'>
