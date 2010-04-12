@@ -27,7 +27,7 @@
         };
 
         draw();
-        setInterval(tick, 5000);
+        //setInterval(tick, 5000);
         $('body').keypress(function(e) {
           switch(e.keyCode) {
             case 106: // j
@@ -53,6 +53,8 @@
         });
       });
     </script>
+    <script src='/javascript/tetris/geometry.js'></script>
+    <script src='/javascript/tetris/block.js'></script>
     <script src='/javascript/tetris/rotator.js'></script>
     <script src='/javascript/tetris/stage.js'></script>
     <script src='/javascript/tetris/physics.js'></script>
