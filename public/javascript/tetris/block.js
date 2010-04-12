@@ -10,36 +10,32 @@ tetris.block = function(x, y) {
 
   var get_xy = function() {
     return [x, y];
-  }
+  };
+
+  var set_xy = function(xy) {
+    x = xy[0];
+    y = xy[1];
+    return [x, y];
+  };
 
   var rotate_right = function(origin) {
-    var v = tetris.geometry.right_rel([x, y], origin);
-    x = v[0];
-    y = v[1];
+    return set_xy(tetris.geometry.right_rel([x, y], origin));
   }
 
   var rotate_left = function(origin) {
-    var v = tetris.geometry.left_rel([x, y], origin);
-    x = v[0];
-    y = v[1];
+    return set_xy(tetris.geometry.left_rel([x, y], origin));
   }
 
   var down = function() {
-    var v = tetris.geometry.translate([x, y], [0, 1]);
-    x = v[0];
-    y = v[1];
+    return set_xy(tetris.geometry.translate([x, y], [0, 1]));
   }
 
   var right = function() {
-    var v = tetris.geometry.translate([x, y], [1, 0]);
-    x = v[0];
-    y = v[1];
+    return set_xy(tetris.geometry.translate([x, y], [1, 0]));
   }
 
   var left = function() {
-    var v = tetris.geometry.translate([x, y], [-1, 0]);
-    x = v[0];
-    y = v[1];
+    return set_xy(tetris.geometry.translate([x, y], [-1, 0]));
   }
 
   return {

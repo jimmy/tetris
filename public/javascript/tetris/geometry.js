@@ -97,13 +97,12 @@ tetris.geometry = function() {
   };
 
   return {
-    right: rotate_right_multi,
-    left: rotate_left_multi,
+//    right: rotate_right_multi,
+//    left: rotate_left_multi,
+//    translate_multi: translate_multi,
 
     right_rel: rotate_right_relative,
     left_rel: rotate_left_relative,
-
-    translate: translate,
-    translate_multi: translate_multi
+    translate: translate
   };
 }();
