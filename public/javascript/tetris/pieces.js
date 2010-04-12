@@ -17,6 +17,14 @@ tetris.pieces = function() {
       object.y += 1;
     };
 
+    var right = function() {
+      object.x += 1;
+    };
+
+    var left = function() {
+      object.x -= 1;
+    };
+
     var get_boxes = function(){
       return boxes;
     }
@@ -26,6 +34,8 @@ tetris.pieces = function() {
       y: y,
       get_boxes: get_boxes,
       down: down,
+      left: left,
+      right: right,
       rotate_right: rotate_right,
       rotate_left: rotate_left
     }
@@ -40,28 +50,34 @@ tetris.pieces = function() {
     return object;
   }
 
-  var i = function(x, y) {
+  var i = function() {
     return piece([ [-1, 0], [0, 0], [1, 0], [2, 0] ]);
   };
 
-  var t = function(x, y) {
+  var t = function() {
     return piece([ [-1, 0], [0, 0], [1, 0], [0, 1] ]);
   };
 
-  var j = function(x, y) {
+  var j = function() {
     return piece([ [0, -1], [0, 0], [0, 1], [-1, 1] ]);
   };
 
-  var l = function(x, y) {
+  var l = function() {
     return piece([ [0, -1], [0, 0], [0, 1], [1, 1] ]);
   };
 
-  var s = function(x, y) {
+  var s = function() {
     return piece([ [0, 0], [1, 0], [-1, 1], [0, 1] ]);
   };
 
-  var z = function(x, y) {
+  var z = function() {
     return piece([ [-1, 0], [0, 0], [0, 1], [1, 1] ]);
+  };
+
+  var random = function() {
+    var pieces = [o, i, t, j, l, s, z];
+    var i = Math.floor(Math.random() * pieces.length);
+    return pieces[i]();
   };
 
   return {
@@ -71,6 +87,7 @@ tetris.pieces = function() {
     j: j,
     l: l,
     s: s,
-    z: z
+    z: z,
+    random: random
   };
 }();

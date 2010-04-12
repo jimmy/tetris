@@ -18,6 +18,9 @@
 
         var tick = function() {
           active_piece.down();
+          if (active_piece.y > stage.height) {
+            active_piece = tetris.pieces.random();
+          }
           draw();
         };
 
@@ -26,9 +29,25 @@
         $('body').keypress(function(e) {
           switch(e.keyCode) {
             case 106: // j
-              active_piece.rotate_left();
+              active_piece.down();
+              break;
+            case 107: // k
+              active_piece.down();
+              active_piece.down();
+              active_piece.down();
+              active_piece.down();
+              active_piece.down();
+              break;
+            case 104: // h
+              active_piece.left();
               break;
             case 108: // l
+              active_piece.right();
+              break;
+            case 97: // a
+              active_piece.rotate_left();
+              break;
+            case 102: // f
               active_piece.rotate_right();
               break;
           }
