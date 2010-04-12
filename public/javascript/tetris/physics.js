@@ -17,12 +17,52 @@ tetris.physics = function() {
     return active_piece;
   }
 
+  var can_move_down = function(piece) {
+    var i;
+    var j;
+    var k;
+    var bs;
+    var boxes = piece.get_next_boxes();
+
+    for (i = 0; i < boxes.length; i += 1) {
+      if (stage.height <= boxes[i][1] + piece.y) {
+        return false;
+      }
+    }
+
+    var p;
+    for (i = 0; i < pieces.length; i += 1) {
+      p = pieces[i];
+      bs = p.get_boxes();
+      for (j = 0; j < bs.length; j += 1) {
+        var b = bs[j];
+        for (k = 0; k < bs.length; k += 1) {
+          if (
+            (b[0] + p.x) === (boxes[k][0] + piece.x)
+            &&
+            (b[1] + p.y) === (boxes[k][1] + piece.y)
+          ) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   var down_and_stuff = function() {
-    down();
-    if (active_piece.y > stage.height) {
+    if (can_move_down(active_piece)) {
+      down();
+    } else {
+      pieces.push(active_piece);
       spawn();
     }
   };
+
+  var pieces = [];
+  var get_pieces = function() {
+    return pieces;
+  }
   
   return {
     down         : down         ,
@@ -34,6 +74,7 @@ tetris.physics = function() {
     spawn        : spawn        ,
     get_active_piece : get_active_piece ,
     stage        : stage        ,
-    down_and_stuff : down_and_stuff
+    down_and_stuff : down_and_stuff,
+    get_pieces : get_pieces
   };
 }();

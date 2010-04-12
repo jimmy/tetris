@@ -25,14 +25,23 @@ tetris.pieces = function() {
       object.x -= 1;
     };
 
-    var get_boxes = function(){
+    var get_boxes = function() {
       return boxes;
     }
-    
+
+    var get_next_boxes = function() {
+      var results = []
+      for (var i = 0; i < boxes.length; i += 1) {
+        results.push( [ boxes[i][0], boxes[i][1]+1 ]);
+      }
+      return results;
+    };
+
     object = {
       x: x,
       y: y,
       get_boxes: get_boxes,
+      get_next_boxes: get_next_boxes,
       down: down,
       left: left,
       right: right,
@@ -76,8 +85,9 @@ tetris.pieces = function() {
 
   var random = function() {
     var pieces = [o, i, t, j, l, s, z];
-    var i = Math.floor(Math.random() * pieces.length);
-    return pieces[i]();
+    var i = Math.floor(Math.random() * (pieces.length-1));
+    return t();
+    //return pieces[i]();
   };
 
   return {
