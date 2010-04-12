@@ -53,15 +53,24 @@
 
         var peices = function() {
           var square = function(x, y) {
+            var object = null;
+
             var width = 2;
             var height = 2;
 
-            return {
+            var move = function() {
+              object.y += 1;
+            };
+            
+            object = {
               x: x,
               y: y,
               width: width,
-              height: height
-            };
+              height: height,
+              move: move
+            }
+
+            return object;
           };
 
           return {
@@ -79,8 +88,16 @@
       $().ready(function(){
         var drawingCanvas = document.getElementById('tetris');
         var renderer = tetris.renderer(drawingCanvas);
-        renderer.render_stage(tetris.stage);
-        renderer.render_square(tetris.peices.square(5, 0));
+
+        var stage = tetris.stage;
+        var square = tetris.peices.square(5, 0);
+
+        var draw = function() {
+          renderer.render_stage(stage);
+          square.move();
+          renderer.render_square(square);
+        };
+        setInterval(draw, 300)
       });
     </script>
   </head>
