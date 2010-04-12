@@ -33,20 +33,44 @@ tetris.pieces = function() {
     return object;
   };
 
-  var square = function() {
+  var o = function() {
     var object = piece([ [0, 0], [0, 1], [1, 0], [1, 1] ]);
     object.rotate_right = function(){};
     object.rotate_left = function(){};
     return object;
   }
 
-  var tee = function(x, y) {
-    var object = piece([ [0, -1], [0, 0], [0, 1], [1, 0] ]);
-    return object;
+  var i = function(x, y) {
+    return piece([ [-1, 0], [0, 0], [1, 0], [2, 0] ]);
+  };
+
+  var t = function(x, y) {
+    return piece([ [-1, 0], [0, 0], [1, 0], [0, 1] ]);
+  };
+
+  var j = function(x, y) {
+    return piece([ [0, -1], [0, 0], [0, 1], [-1, 1] ]);
+  };
+
+  var l = function(x, y) {
+    return piece([ [0, -1], [0, 0], [0, 1], [1, 1] ]);
+  };
+
+  var s = function(x, y) {
+    return piece([ [0, 0], [1, 0], [-1, 1], [0, 1] ]);
+  };
+
+  var z = function(x, y) {
+    return piece([ [-1, 0], [0, 0], [0, 1], [1, 1] ]);
   };
 
   return {
-    square: square,
-    tee: tee
+    o: o,
+    i: i,
+    t: t,
+    j: j,
+    l: l,
+    s: s,
+    z: z
   };
 }();

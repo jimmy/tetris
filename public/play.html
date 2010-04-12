@@ -9,19 +9,31 @@
         var renderer = tetris.renderer(drawingCanvas);
 
         var stage = tetris.stage;
-        var square = tetris.pieces.square();
-        var tee = tetris.pieces.tee();
+        var active_piece = tetris.pieces.l();
 
         var draw = function() {
           renderer.render_stage(stage);
-          square.down();
-          tee.down();
-          renderer.render_piece(square);
-          tee.rotate_right();
-          renderer.render_piece(tee);
+          renderer.render_piece(active_piece);
         };
+
+        var tick = function() {
+          active_piece.down();
+          draw();
+        };
+
         draw();
-        setInterval(draw, 500);
+        setInterval(tick, 500);
+        $('body').keypress(function(e) {
+          switch(e.keyCode) {
+            case 106: // j
+              active_piece.rotate_left();
+              break;
+            case 108: // l
+              active_piece.rotate_right();
+              break;
+          }
+          draw();
+        });
       });
     </script>
     <script src='/javascript/tetris/rotator.js'></script>
