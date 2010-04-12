@@ -9,9 +9,11 @@
           var height = 36;
 
           var render = function(context) {
+            // TODO: DRY this up
             var t = function(x) {
               return x * 14;
-            }
+            };
+
             context.fillStyle   = '#ccc';
             context.strokeStyle = '#000';
             context.lineWidth   = 4;
@@ -24,11 +26,43 @@
             width: width,
             height: height,
             render: render
-          }
+          };
+        }();
+
+        var peices = function() {
+          var square = function(x, y) {
+            var width = 2;
+            var height = 2;
+
+            var render = function(context) {
+              // TODO: DRY this up
+              var t = function(x) {
+                return x * 14;
+              };
+
+              context.fillStyle   = '#ff0';
+              context.strokeStyle = '#000';
+              context.lineWidth   = 4;
+
+              context.fillRect(10 + t(x), 10 + t(y), t(width), t(height));
+              context.strokeRect(10 + t(x), 10+ t(y), t(width), t(height));
+            };
+
+            return {
+              x: x,
+              y: y,
+              render: render
+            };
+          };
+
+          return {
+            square: square
+          };
         }();
 
         return {
-          stage: stage
+          stage: stage,
+          peices: peices
         }
       }();
 
@@ -37,6 +71,8 @@
         if(drawingCanvas.getContext) {
           var context = drawingCanvas.getContext('2d');
           tetris.stage.render(context); 
+          square = tetris.peices.square(5,0); 
+          square.render(context);
         }
       });
     </script>
