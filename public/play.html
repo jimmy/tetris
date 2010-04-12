@@ -2,154 +2,35 @@
   <head>
     <script src='/javascript/jquery-1.4.2.min.js'></script>
     <script type='text/javascript'>
-      var tetris = function() {
-
-        var renderer = function(drawingCanvas) {
-          var t = function(x) {
-            return x * 14;
-          };
-
-          var context = null;
-          if (drawingCanvas.getContext) {
-            context = drawingCanvas.getContext('2d');
-          }
-
-          var x_offset = 10;
-          var y_offset = 10;
-
-          var render_stage = function(stage) {
-            context.fillStyle   = '#ccc';
-            context.strokeStyle = '#000';
-            context.lineWidth   = 4;
-
-            context.fillRect(x_offset, y_offset, t(stage.width), t(stage.height));
-            context.strokeRect(x_offset, y_offset, t(stage.width), t(stage.height));
-          }
-
-          var render_square = function(square) {
-            context.fillStyle   = '#ff0';
-            context.strokeStyle = '#000';
-            context.lineWidth   = 4;
-
-            context.fillRect(x_offset + t(square.x), y_offset + t(square.y), t(square.width), t(square.height));
-            context.strokeRect(x_offset + t(square.x), y_offset + t(square.y), t(square.width), t(square.height));
-          };
-
-          var render_tee = function(tee) {
-            context.fillStyle   = '#0ff';
-            context.strokeStyle = '#000';
-            context.lineWidth   = 4;
-
-            context.beginPath();
-            context.moveTo(x_offset + t(tee.x + 0), y_offset + t(tee.y + 0));
-            context.lineTo(x_offset + t(tee.x + 1), y_offset + t(tee.y + 0));
-            context.lineTo(x_offset + t(tee.x + 1), y_offset + t(tee.y + 1));
-            context.lineTo(x_offset + t(tee.x + 2), y_offset + t(tee.y + 1));
-            context.lineTo(x_offset + t(tee.x + 2), y_offset + t(tee.y + 2));
-            context.lineTo(x_offset + t(tee.x + 1), y_offset + t(tee.y + 2));
-            context.lineTo(x_offset + t(tee.x + 1), y_offset + t(tee.y + 3));
-            context.lineTo(x_offset + t(tee.x + 0), y_offset + t(tee.y + 3));
-            context.closePath();
-
-            context.fill();
-            context.stroke();
-          };
-
-          return {
-            render_stage: render_stage,
-            render_square: render_square,
-            render_tee: render_tee
-          };
-        };
-
-        var stage = function() {
-          var width = 12;
-          var height = 36;
-
-          return {
-            width: width,
-            height: height
-          };
-        }();
-
-        var peices = function() {
-          var square = function(x, y) {
-            var object = null;
-
-            var width = 2;
-            var height = 2;
-
-            var move = function() {
-              object.y += 1;
-            };
-            
-            object = {
-              x: x,
-              y: y,
-              width: width,
-              height: height,
-              move: move
-            }
-
-            return object;
-          };
-
-          var tee = function(x, y) {
-            var object = null;
-
-            var width = 2;
-            var height = 2;
-
-            var move = function() {
-              object.y += 1;
-            };
-            
-            object = {
-              x: x,
-              y: y,
-              width: width,
-              height: height,
-              move: move
-            }
-
-            return object;
-          };
-
-          return {
-            square: square,
-            tee: tee
-          };
-        }();
-
-        return {
-          stage: stage,
-          peices: peices,
-          renderer: renderer
-        }
-      }();
+      var tetris = {};
 
       $().ready(function(){
         var drawingCanvas = document.getElementById('tetris');
         var renderer = tetris.renderer(drawingCanvas);
 
         var stage = tetris.stage;
-        var square = tetris.peices.square(5, 0);
+        var square = tetris.pieces.square(5, 0);
         square.move();
         square.move();
         square.move();
         square.move();
-        var tee = tetris.peices.tee(5, 0);
+        var tee = tetris.pieces.tee(5, 0);
 
         var draw = function() {
           renderer.render_stage(stage);
           square.move();
           tee.move();
           renderer.render_square(square);
+          tee.rotate_right();
           renderer.render_tee(tee);
         };
-        setInterval(draw, 300);
+        setInterval(draw, 500);
       });
     </script>
+    <script src='/javascript/tetris/rotator.js'></script>
+    <script src='/javascript/tetris/pieces.js'></script>
+    <script src='/javascript/tetris/renderer.js'></script>
+    <script src='/javascript/tetris/stage.js'></script>
   </head>
   <body>
     <canvas id='tetris' width='800' height='600'>
