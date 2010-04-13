@@ -3,33 +3,13 @@ tetris.stage = function() {
   //var height = 36;
   var height = 12;
 
-  var slots = [];
-  for (var row = 0; row < height; row += 1) {
-    var cur_row = [];
-    for (var col = 0; col < width; col += 1) {
-      cur_row.push(null);
-    }
-    slots.push(cur_row);
-  }
-
+  var dead_blocks = [];
   var get_dead_blocks = function() {
-    var blocks = [];
-    for (var row = 0; row < height; row += 1) {
-      for (var col = 0; col < width; col += 1) {
-        if (slots[row][col]) {
-          blocks.push(slots[row][col]);
-        }
-      }
-    }
-    return blocks;
+    return dead_blocks;
   };
 
   var add_dead_blocks = function(blocks) {
-    for (var i = 0; i < blocks.length; i += 1) {
-      var col = blocks[i].x();
-      var row = blocks[i].y();
-      slots[row][col] = blocks[i];
-    }
+    dead_blocks = dead_blocks.concat(blocks);
     clear_full_lines();
   };
 
@@ -41,23 +21,57 @@ tetris.stage = function() {
     }
     return true;
   };
+
+  var fresh_slots = function() {
+    var slots = [];
+    for (var i = 0; i < height; i += 1) {
+      slots[i] = [];
+      for (var j = 0; j < height; j += 1) {
+        slots[i].push(null);
+      }
+    }
+    return slots;
+  };
+
+  var make_index = function(blocks) {
+    var slots = fresh_slots();
+    for (var i = 0; i < blocks.length; i += 1) {
+      slots[blocks[i].y()][blocks[i].x()] = [i, blocks[i]];
+    }
+    return slots;
+  }
+
   var clear_full_lines = function() {
-    for (var row = 0; row < height; row += 1) {
-      if (full_row(slots[row])) {
-        for (var col = 0; col < width; col += 1) {
-          slots[row][col] = null;
-        }
+    var index = make_index(dead_blocks);
+    for (var i = 0; i < height; i += 1) {
+      if (full_row(index[i])) {
+        clear_row(i);
+        down(i);
       }
     }
   };
 
-  var collapse = function() {
+  var clear_row = function(row) {
+    var new_blocks = [];
+    for (var i = 0; i < dead_blocks.length; i += 1) {
+      if (dead_blocks[i].y() != row) {
+        new_blocks.push(dead_blocks[i]);
+      }
+    }
+    dead_blocks = new_blocks;
+  };
+
+  var down = function(row) {
+    for (var i = 0; i < dead_blocks.length; i += 1) {
+      if (dead_blocks[i].y() < row) {
+        dead_blocks[i].down();
+      }
+    }
   };
 
   return {
     width: width,
     height: height,
-    slots: slots,
     add_dead_blocks: add_dead_blocks,
     dead_blocks: get_dead_blocks
   };
