@@ -17,7 +17,7 @@
         };
 
         var tick = function() {
-          physics.down_and_stuff();
+          physics.down();
           draw();
         };
 
@@ -26,7 +26,7 @@
         $('body').keypress(function(e) {
           switch(e.keyCode) {
             case 106: // j
-              physics.down_and_stuff();
+              physics.down();
               break;
             case 107: // k
               physics.drop();

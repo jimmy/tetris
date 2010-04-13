@@ -1,12 +1,26 @@
 tetris.physics = function() {
   var stage = tetris.stage;
 
-  var down         = function() { active_piece.down();         };
-  var left         = function() { active_piece.left();         };
-  var right        = function() { active_piece.right();        };
-  var drop         = function() { active_piece.drop();         };
-  var rotate_right = function() { active_piece.rotate_right(); };
-  var rotate_left  = function() { active_piece.rotate_left();  };
+  var move_if_legit = function(move, foo) {
+    return function() {
+      if (legit_world(move(false))) {
+        move(true);
+      } else {
+        if (foo) {
+          stage.add_dead_blocks(active_piece.blocks());
+          spawn();
+        }
+      }
+    };
+  };
+
+
+  var down         = move_if_legit(function(modify) { return active_piece.down(modify);         }, true);
+  var left         = move_if_legit(function(modify) { return active_piece.left(modify);         });
+  var right        = move_if_legit(function(modify) { return active_piece.right(modify);        });
+  var drop         = move_if_legit(function(modify) { return active_piece.drop(modify);         });
+  var rotate_right = move_if_legit(function(modify) { return active_piece.rotate_right(modify); });
+  var rotate_left  = move_if_legit(function(modify) { return active_piece.rotate_left(modify);  });
 
   var active_piece = null;
   var spawn = function() {
@@ -20,13 +34,15 @@ tetris.physics = function() {
 
   var get_active_piece = function() {
     return active_piece;
-  }
+  };
 
-  var can_move_down = function(piece) {
-    var blocks = piece.down(false);
-
+  var legit_world = function(blocks) {
     for (var i = 0; i < blocks.length; i += 1) {
-      if (stage.height <= blocks[i].y()) {
+      if (
+        stage.height <= blocks[i].y() ||
+        blocks[i].x() < 0  ||
+        stage.width <= blocks[i].x()
+      ) {
         return false;
       }
     }
@@ -42,12 +58,10 @@ tetris.physics = function() {
     }
 
     return true;
-  }
+  };
 
-  var down_and_stuff = function() {
-    if (can_move_down(active_piece)) {
-      down();
-    } else {
+  var down_and_freeze = function() {
+    if (!down()) {
       stage.add_dead_blocks(active_piece.blocks());
       spawn();
     }
@@ -62,7 +76,6 @@ tetris.physics = function() {
     rotate_left  : rotate_left  ,
     spawn        : spawn        ,
     get_active_piece : get_active_piece ,
-    stage        : stage        ,
-    down_and_stuff : down_and_stuff
+    stage        : stage
   };
 }();
