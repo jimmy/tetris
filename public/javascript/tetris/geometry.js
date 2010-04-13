@@ -1,14 +1,46 @@
 tetris.geometry = function() {
+  var map_over_pairs = function(a, b, fn) {
+    var results = [];
+    for (var i = 0; i < a.length; i += 1) {
+      results.push(fn(a[i], b[i]));
+    }
+    return results;
+  };
+
+  var get_column = function(matrix, col) {
+    return matrix.map(function(row){return row[col];});
+  }
+
+  var transpose_matrix = function(matrix) {
+    var results = [];
+    for (var i = 0; i < matrix.length; i += 1) {
+      results.push(get_column(matrix, i));
+    }
+    return results;
+  }
+
   var dot_product = function(a, b) {
-    return (a[0]*b[0]) + (a[1]*b[1]);
+    var result = 0;
+    for (var i = 0; i < a.length; i += 1) {
+      result += a[i] * b[i]
+    }
+    return result;
   };
 
   var matrix_apply = function(matrix, vector) {
-    col_0 = [matrix[0][0], matrix[1][0]];
-    col_1 = [matrix[0][1], matrix[1][1]];
-    return [dot_product(col_0, vector),dot_product(col_1, vector)];
+    var columns = transpose_matrix(matrix);
+    return columns.map(function(column){
+      return dot_product(column, vector);
+    });
   };
 
+  var neg = function(vector) {
+    return vector.map(function(i){return -i;});
+  };
+
+  var translate = function(a, b) {
+    return map_over_pairs(a, b, function(x,y){return x + y;});
+  };
 
   var rotate_left = function(vector) {
     return matrix_apply(
@@ -24,38 +56,13 @@ tetris.geometry = function() {
       vector);
   };
 
-  var rotate_right_multi = function(vectors) {
-     var results = [];
-     for(var i = 0; i < vectors.length; i += 1) {
-       results.push(rotate_right(vectors[i]));
-     }
-     return results;
+  var rotate_left_relative = function(vector, origin) {
+    var v = vector;
+    v = translate(v, neg(origin));
+    v = rotate_left(v)
+    v = translate(v, origin);
+    return v;
   };
-
-  var neg = function(vector) {
-    var results = [];
-    for (var i = 0; i < vector.length; i += 1) {
-      results.push(-1 * vector[i]);
-    }
-    return results; 
-  };
-
-  var translate = function(a, b) {
-     var results = [];
-     for(var i = 0; i < a.length; i += 1) {
-       results.push(a[i] + b[i]);
-     }
-     return results;
-  };
-
-  var translate_multi = function(vectors, vector) {
-    var results = [];
-     for (var i = 0; i < vectors.length; i += 1) {
-       results.push(translate(vectors[i], vector));
-     }
-    return results;
-  };
-
 
   var rotate_right_relative = function(vector, origin) {
     var v = vector;
@@ -65,42 +72,7 @@ tetris.geometry = function() {
     return v;
   };
 
-  var rotate_left_relative = function(vector, origin) {
-    var v = vector;
-    v = translate(v, neg(origin));
-    v = rotate_left(v)
-    v = translate(v, origin);
-    return v;
-  };
-
-  var rotate_left_multi_relative = function(vectors, origin) {
-     var results = [];
-     var v;
-     for(var i = 0; i < vectors.length; i += 1) {
-       v = vectors[i]
-
-       v = translate(v, neg(origin));
-       v = rotate_left(v)
-       v = translate(v, origin);
-
-       results.push(v);
-     }
-     return results;
-  };
-
-  var rotate_left_multi = function(vectors) {
-     var results = [];
-     for(var i = 0; i < vectors.length; i += 1) {
-       results.push(rotate_left(vectors[i]));
-     }
-     return results;
-  };
-
   return {
-//    right: rotate_right_multi,
-//    left: rotate_left_multi,
-//    translate_multi: translate_multi,
-
     right_rel: rotate_right_relative,
     left_rel: rotate_left_relative,
     translate: translate

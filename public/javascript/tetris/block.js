@@ -18,24 +18,29 @@ tetris.block = function(x, y) {
     return [x, y];
   };
 
-  var rotate_right = function(origin) {
-    return set_xy(tetris.geometry.right_rel([x, y], origin));
+  var rotate_right = function(origin, modify) {
+    var xy = tetris.geometry.right_rel([x, y], origin);
+    return modify === false ? xy : set_xy(xy);
   }
 
-  var rotate_left = function(origin) {
-    return set_xy(tetris.geometry.left_rel([x, y], origin));
+  var rotate_left = function(origin, modify) {
+    var xy = tetris.geometry.left_rel([x, y], origin);
+    return modify === false ? xy : set_xy(xy);
   }
 
-  var down = function() {
-    return set_xy(tetris.geometry.translate([x, y], [0, 1]));
+  var down = function(modify) {
+    var xy = tetris.geometry.translate([x, y], [0, 1]);
+    return modify === false ? xy : set_xy(xy);
   }
 
-  var right = function() {
-    return set_xy(tetris.geometry.translate([x, y], [1, 0]));
+  var right = function(modify) {
+    var xy = tetris.geometry.translate([x, y], [1, 0]);
+    return modify === false ? xy : set_xy(xy);
   }
 
-  var left = function() {
-    return set_xy(tetris.geometry.translate([x, y], [-1, 0]));
+  var left = function(modify) {
+    var xy = tetris.geometry.translate([x, y], [-1, 0]);
+    return modify === false ? xy : set_xy(xy);
   }
 
   return {
