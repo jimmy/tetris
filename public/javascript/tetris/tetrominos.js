@@ -110,8 +110,7 @@ tetris.tetrominos = function() {
   var random = function() {
     var pieces = [o, i, t, j, l, s, z];
     var n = Math.floor(Math.random() * (pieces.length-1));
-    return i();
-    //return pieces[n]();
+    return pieces[n]();
   };
 
   return {
