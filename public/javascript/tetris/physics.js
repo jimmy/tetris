@@ -31,6 +31,7 @@ tetris.physics = function() {
       }
     }
 
+    var dead_blocks = stage.dead_blocks();
     for (var i = 0; i < dead_blocks.length; i += 1) {
       var block = dead_blocks[i];
       for (var j = 0; j < blocks.length; j += 1) {
@@ -43,20 +44,14 @@ tetris.physics = function() {
     return true;
   }
 
-  var dead_blocks = [];
-  var get_dead_blocks = function() {
-    return dead_blocks;
-  }
-
   var down_and_stuff = function() {
     if (can_move_down(active_piece)) {
       down();
     } else {
-      dead_blocks = dead_blocks.concat(active_piece.blocks());
+      stage.add_dead_blocks(active_piece.blocks());
       spawn();
     }
   };
-
 
   return {
     down         : down         ,
@@ -68,7 +63,6 @@ tetris.physics = function() {
     spawn        : spawn        ,
     get_active_piece : get_active_piece ,
     stage        : stage        ,
-    down_and_stuff : down_and_stuff,
-    dead_blocks : get_dead_blocks
+    down_and_stuff : down_and_stuff
   };
 }();

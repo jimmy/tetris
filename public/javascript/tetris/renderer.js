@@ -18,6 +18,12 @@ tetris.renderer = function(drawingCanvas) {
 
     context.fillRect(x_offset, y_offset, t(stage.width), t(stage.height));
     context.strokeRect(x_offset, y_offset, t(stage.width), t(stage.height));
+
+    context.fillStyle   = '#f00';
+    var blocks = stage.dead_blocks();
+    for (var i = 0; i < blocks.length; i += 1) {
+      context.fillRect(x_offset + t(blocks[i].x()), y_offset + t(blocks[i].y()), t(1), t(1));
+    }
   }
 
   var render_piece = function(piece) {

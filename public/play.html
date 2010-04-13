@@ -14,7 +14,6 @@
         var draw = function() {
           renderer.render_stage(physics.stage);
           renderer.render_tetromino(physics.get_active_piece());
-          renderer.render_blocks(physics.dead_blocks());
         };
 
         var tick = function() {
