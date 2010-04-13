@@ -26,7 +26,7 @@ tetris.renderer = function(drawingCanvas) {
     var y;
 
     context.fillStyle   = '#ff0';
-    
+
     for (var i = 0; i < boxes.length; i += 1) {
       x = boxes[i][0];
       y = boxes[i][1];
@@ -39,8 +39,27 @@ tetris.renderer = function(drawingCanvas) {
     }
   };
 
+  var render_tetromino = function(tetromino) {
+    render_blocks(tetromino.blocks());
+  };
+
+  var render_blocks = function(blocks) {
+    context.fillStyle   = '#ff0';
+
+    for (var i = 0; i < blocks.length; i += 1) {
+      context.fillRect(
+        x_offset + t(blocks[i].x()),
+        y_offset + t(blocks[i].y()),
+        t(1),
+        t(1)
+      );
+    }
+  };
+
   return {
     render_stage: render_stage,
-    render_piece: render_piece
+    render_piece: render_piece,
+    render_blocks: render_blocks,
+    render_tetromino: render_tetromino
   };
 };

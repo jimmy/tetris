@@ -3,23 +3,30 @@ tetris.tetrominos = function() {
 
     var object = null;
 
-    var origin = [5, 0];
     var blocks = boxes.map(function(box){return tetris.block(box[0], box[1]);});
+
+    var pivot = function() {
+      return blocks[0].xy();
+    }
 
     var rotate_right = function(modify) {
       var results = [];
       for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].rotate_right(origin, modify));
+        results.push(blocks[i].rotate_right(pivot(), modify));
       }
-      return results;
+      return modify ?
+        blocks :
+        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
     };
 
     var rotate_left = function(modify) {
       var results = [];
       for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].rotate_left(origin, modify));
+        results.push(blocks[i].rotate_left(pivot(), modify));
       }
-      return results;
+      return modify ?
+        blocks :
+        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
     };
 
     var down = function(modify) {
@@ -27,7 +34,9 @@ tetris.tetrominos = function() {
       for (var i = 0; i < blocks.length; i += 1) {
         results.push(blocks[i].down(modify));
       }
-      return results;
+      return modify ?
+        blocks :
+        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
     };
 
     var right = function(modify) {
@@ -35,7 +44,9 @@ tetris.tetrominos = function() {
       for (var i = 0; i < blocks.length; i += 1) {
         results.push(blocks[i].right(modify));
       }
-      return results;
+      return modify ?
+        blocks :
+        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
     };
 
     var left = function(modify) {
@@ -43,7 +54,9 @@ tetris.tetrominos = function() {
       for (var i = 0; i < blocks.length; i += 1) {
         results.push(blocks[i].left(modify));
       }
-      return results;
+      return modify ?
+        blocks :
+        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
     };
 
     var get_blocks = function() {
@@ -51,7 +64,7 @@ tetris.tetrominos = function() {
     }
 
     object = {
-      origin: origin,
+      pivot: pivot,
       blocks: get_blocks,
       rotate_right: rotate_right,
       rotate_left: rotate_left,

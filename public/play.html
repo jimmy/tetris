@@ -5,7 +5,6 @@
       var tetris = {};
 
       $().ready(function(){
-      return;
         var drawingCanvas = document.getElementById('tetris');
         var renderer = tetris.renderer(drawingCanvas);
 
@@ -14,12 +13,8 @@
 
         var draw = function() {
           renderer.render_stage(physics.stage);
-          renderer.render_piece(physics.get_active_piece());
-
-          var pieces = physics.get_pieces();
-          for (var i = 0; i < pieces.length; i += 1) {
-            renderer.render_piece(pieces[i]);
-          }
+          renderer.render_tetromino(physics.get_active_piece());
+          renderer.render_blocks(physics.dead_blocks());
         };
 
         var tick = function() {
@@ -28,7 +23,7 @@
         };
 
         draw();
-        //setInterval(tick, 5000);
+        setInterval(tick, 500);
         $('body').keypress(function(e) {
           switch(e.keyCode) {
             case 106: // j
