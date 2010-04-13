@@ -18,9 +18,16 @@ tetris.physics = function() {
   var down         = move_if_legit(function(modify) { return active_piece.down(modify);         }, true);
   var left         = move_if_legit(function(modify) { return active_piece.left(modify);         });
   var right        = move_if_legit(function(modify) { return active_piece.right(modify);        });
-  var drop         = move_if_legit(function(modify) { return active_piece.drop(modify);         });
   var rotate_right = move_if_legit(function(modify) { return active_piece.rotate_right(modify); });
   var rotate_left  = move_if_legit(function(modify) { return active_piece.rotate_left(modify);  });
+
+  var drop         = function() {
+    while (legit_world(active_piece.down(false))) {
+      active_piece.down();
+    }
+    stage.add_dead_blocks(active_piece.blocks());
+    spawn();
+  };
 
   var active_piece = null;
   var spawn = function() {
