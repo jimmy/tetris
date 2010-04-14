@@ -9,55 +9,37 @@ tetris.tetrominos = function() {
       return blocks[0].xy();
     }
 
-    var rotate_right = function(modify) {
-      var results = [];
-      for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].rotate_right(pivot(), modify));
-      }
-      return modify ?
-        blocks :
-        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
+    var factory = function(fn) {
+      return function(modify) {
+        var results = [];
+        for (var i = 0; i < blocks.length; i += 1) {
+          results.push(fn(blocks[i], modify));
+        }
+        return modify ?
+          blocks :
+          results.map(function(xy){return tetris.block(xy[0], xy[1]);});
+      };
     };
 
-    var rotate_left = function(modify) {
-      var results = [];
-      for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].rotate_left(pivot(), modify));
-      }
-      return modify ?
-        blocks :
-        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
-    };
+    var rotate_right = factory(function(block, modify) {
+      return block.rotate_right(pivot(), modify);
+    });
 
-    var down = function(modify) {
-      var results = [];
-      for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].down(modify));
-      }
-      return modify ?
-        blocks :
-        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
-    };
+    var rotate_left = factory(function(block, modify) {
+      return block.rotate_left(pivot(), modify);
+    });
 
-    var right = function(modify) {
-      var results = [];
-      for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].right(modify));
-      }
-      return modify ?
-        blocks :
-        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
-    };
+    var down = factory(function(block, modify) {
+      return block.down(modify);
+    });
 
-    var left = function(modify) {
-      var results = [];
-      for (var i = 0; i < blocks.length; i += 1) {
-        results.push(blocks[i].left(modify));
-      }
-      return modify ?
-        blocks :
-        results.map(function(xy){return tetris.block(xy[0], xy[1]);});
-    };
+    var right = factory(function(block, modify) {
+      return block.right(modify);
+    });
+
+    var left = factory(function(block, modify) {
+      return block.left(modify);
+    });
 
     var get_blocks = function() {
       return blocks;
