@@ -1,6 +1,6 @@
 tetris.renderer = function(drawingCanvas) {
   var t = function(x) {
-    return x * 14;
+    return x * 20;
   };
 
   var context = null;
