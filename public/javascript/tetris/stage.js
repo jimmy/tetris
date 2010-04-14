@@ -1,7 +1,6 @@
 tetris.stage = function() {
-  var width = 12;
-  //var height = 36;
-  var height = 12;
+  var width = 10;
+  var height = 20;
 
   var dead_blocks = [];
   var get_dead_blocks = function() {
@@ -36,14 +35,15 @@ tetris.stage = function() {
   var make_index = function(blocks) {
     var slots = fresh_slots();
     for (var i = 0; i < blocks.length; i += 1) {
-      slots[blocks[i].y()][blocks[i].x()] = [i, blocks[i]];
+      var block = blocks[i];
+      slots[block.y()][block.x()] = block;
     }
     return slots;
-  }
+  };
 
   var clear_full_lines = function() {
     var index = make_index(dead_blocks);
-    for (var i = 0; i < height; i += 1) {
+    for (var i = 0; i < index.length; i += 1) {
       if (full_row(index[i])) {
         clear_row(i);
         down(i);

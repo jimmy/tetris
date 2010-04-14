@@ -1,12 +1,12 @@
 tetris.physics = function() {
   var stage = tetris.stage;
 
-  var move_if_legit = function(move, foo) {
+  var move_if_legit = function(move, should_spawn) {
     return function() {
       if (legit_world(move(false))) {
         move(true);
       } else {
-        if (foo) {
+        if (should_spawn) {
           stage.add_dead_blocks(active_piece.blocks());
           spawn();
         }
@@ -14,14 +14,13 @@ tetris.physics = function() {
     };
   };
 
-
   var down         = move_if_legit(function(modify) { return active_piece.down(modify);         }, true);
   var left         = move_if_legit(function(modify) { return active_piece.left(modify);         });
   var right        = move_if_legit(function(modify) { return active_piece.right(modify);        });
   var rotate_right = move_if_legit(function(modify) { return active_piece.rotate_right(modify); });
   var rotate_left  = move_if_legit(function(modify) { return active_piece.rotate_left(modify);  });
 
-  var drop         = function() {
+  var drop = function() {
     while (legit_world(active_piece.down(false))) {
       active_piece.down();
     }
@@ -67,13 +66,6 @@ tetris.physics = function() {
     return true;
   };
 
-  var down_and_freeze = function() {
-    if (!down()) {
-      stage.add_dead_blocks(active_piece.blocks());
-      spawn();
-    }
-  };
-
   return {
     down         : down         ,
     left         : left         ,
@@ -82,7 +74,7 @@ tetris.physics = function() {
     rotate_right : rotate_right ,
     rotate_left  : rotate_left  ,
     spawn        : spawn        ,
-    get_active_piece : get_active_piece ,
+    active_piece : get_active_piece ,
     stage        : stage
   };
 }();

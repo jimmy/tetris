@@ -13,7 +13,7 @@
 
         var draw = function() {
           renderer.render_stage(physics.stage);
-          renderer.render_tetromino(physics.get_active_piece());
+          renderer.render_tetromino(physics.active_piece());
         };
 
         var tick = function() {
@@ -51,10 +51,8 @@
     <script src='/javascript/tetris/geometry.js'></script>
     <script src='/javascript/tetris/block.js'></script>
     <script src='/javascript/tetris/tetrominos.js'></script>
-    <script src='/javascript/tetris/rotator.js'></script>
     <script src='/javascript/tetris/stage.js'></script>
     <script src='/javascript/tetris/physics.js'></script>
-    <script src='/javascript/tetris/pieces.js'></script>
     <script src='/javascript/tetris/renderer.js'></script>
   </head>
   <body>

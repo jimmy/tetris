@@ -21,27 +21,27 @@ tetris.block = function(x, y) {
   var rotate_right = function(origin, modify) {
     var xy = tetris.geometry.right_rel([x, y], origin);
     return modify === false ? xy : set_xy(xy);
-  }
+  };
 
   var rotate_left = function(origin, modify) {
     var xy = tetris.geometry.left_rel([x, y], origin);
     return modify === false ? xy : set_xy(xy);
-  }
+  };
 
   var down = function(modify) {
     var xy = tetris.geometry.translate([x, y], [0, 1]);
     return modify === false ? xy : set_xy(xy);
-  }
+  };
 
   var right = function(modify) {
     var xy = tetris.geometry.translate([x, y], [1, 0]);
     return modify === false ? xy : set_xy(xy);
-  }
+  };
 
   var left = function(modify) {
     var xy = tetris.geometry.translate([x, y], [-1, 0]);
     return modify === false ? xy : set_xy(xy);
-  }
+  };
 
   return {
     x: get_x,

@@ -9,7 +9,7 @@ tetris.geometry = function() {
 
   var get_column = function(matrix, col) {
     return matrix.map(function(row){return row[col];});
-  }
+  };
 
   var transpose_matrix = function(matrix) {
     var results = [];
@@ -17,7 +17,7 @@ tetris.geometry = function() {
       results.push(get_column(matrix, i));
     }
     return results;
-  }
+  };
 
   var dot_product = function(a, b) {
     var result = 0;
@@ -29,7 +29,7 @@ tetris.geometry = function() {
 
   var matrix_apply = function(matrix, vector) {
     var columns = transpose_matrix(matrix);
-    return columns.map(function(column){
+    return columns.map(function(column) {
       return dot_product(column, vector);
     });
   };

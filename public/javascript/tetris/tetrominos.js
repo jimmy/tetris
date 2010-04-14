@@ -84,27 +84,27 @@ tetris.tetrominos = function() {
   }
 
   var i = function() {
-    return piece([ [-1, 0], [0, 0], [1, 0], [2, 0] ]);
+    return piece([ [0, 0], [-1, 0], [1, 0], [2, 0] ]);
   };
 
   var t = function() {
-    return piece([ [-1, 0], [0, 0], [1, 0], [0, 1] ]);
+    return piece([ [0, 0], [-1, 0], [1, 0], [0, 1] ]);
   };
 
   var j = function() {
-    return piece([ [0, -1], [0, 0], [0, 1], [-1, 1] ]);
+    return piece([  [0, 0],[0, 1], [0, -1], [-1, 1] ]);
   };
 
   var l = function() {
-    return piece([ [0, -1], [0, 0], [0, 1], [1, 1] ]);
+    return piece([ [0, 0], [0, -1], [0, 1], [1, 1] ]);
   };
 
   var s = function() {
-    return piece([ [0, 0], [1, 0], [-1, 1], [0, 1] ]);
+    return piece([ [0, 1], [0, 0], [1, 0], [-1, 1] ]);
   };
 
   var z = function() {
-    return piece([ [-1, 0], [0, 0], [0, 1], [1, 1] ]);
+    return piece([ [0, 1], [-1, 0], [0, 0], [1, 1] ]);
   };
 
   var random = function() {
