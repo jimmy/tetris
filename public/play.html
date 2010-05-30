@@ -21,26 +21,36 @@
           draw();
         };
 
+        var keyCodes = {
+          d: 68,
+          f: 70,
+          h: 72,
+          j: 74,
+          k: 75,
+          l: 76
+        };
+
         draw();
         setInterval(tick, 500);
-        $('body').keypress(function(e) {
+        $('body').keydown(function(e) {
+        console.log(e.keyCode);
           switch(e.keyCode) {
-            case 106: // j
+            case keyCodes.j:
               physics.down();
               break;
-            case 107: // k
+            case keyCodes.k:
               physics.drop();
               break;
-            case 104: // h
+            case keyCodes.h:
               physics.left();
               break;
-            case 108: // l
+            case keyCodes.l:
               physics.right();
               break;
-            case 97: // a
+            case keyCodes.d:
               physics.rotate_left();
               break;
-            case 102: // f
+            case keyCodes.f:
               physics.rotate_right();
               break;
           }
