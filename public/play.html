@@ -1,5 +1,10 @@
 <html>
   <head>
+    <style type='text/css'>
+      canvas { float: left; }
+      #controls { float: left; }
+      .control-key { font-weight: bold }
+    </style>
     <script src='/javascript/jquery-1.4.2.min.js'></script>
     <script type='text/javascript'>
       var tetris = {};
@@ -66,7 +71,15 @@
     <script src='/javascript/tetris/renderer.js'></script>
   </head>
   <body>
-    <canvas id='tetris' width='800' height='600'>
+    <canvas id='tetris' width='300' height='500'>
     </canvas>
+    <table id='controls'>
+      <tr><td class='control-key'>H</td><td>left</td></tr>
+      <tr><td class='control-key'>J</td><td>down</td></tr>
+      <tr><td class='control-key'>K</td><td>drop</td></tr>
+      <tr><td class='control-key'>L</td><td>right</td></tr>
+      <tr><td class='control-key'>D</td><td>rotate left</td></tr>
+      <tr><td class='control-key'>F</td><td>rotate right</td></tr>
+    </table>
   </body>
 </html>
