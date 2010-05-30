@@ -22,14 +22,13 @@ tetris.renderer = function(drawingCanvas) {
     context.fillStyle   = '#f00';
     context.strokeStyle = "#000";
     context.lineWidth   = 2;
-    var blocks = stage.dead_blocks();
-    for (var i = 0; i < blocks.length; i += 1) {
-      context.fillRect(x_offset + t(blocks[i].x()), y_offset + t(blocks[i].y()), t(1), t(1));
-      context.strokeRect(x_offset + t(blocks[i].x()), y_offset + t(blocks[i].y()), t(1), t(1));
-    }
+    render_blocks(stage.dead_blocks(), stage);
   }
 
   var render_tetromino = function(tetromino, stage) {
+    context.fillStyle   = '#ff0';
+    context.strokeStyle = "#000";
+    context.lineWidth   = 2;
     render_blocks(tetromino.blocks(), stage);
   };
 
@@ -43,10 +42,6 @@ tetris.renderer = function(drawingCanvas) {
     context.lineTo( x_offset                 , y_offset                   );
     context.closePath();
     context.clip();
-
-    context.fillStyle   = '#ff0';
-    context.strokeStyle = "#000";
-    context.lineWidth   = 2;
 
     for (var i = 0; i < blocks.length; i += 1) {
       context.fillRect(
