@@ -13,7 +13,7 @@
 
         var draw = function() {
           renderer.render_stage(physics.stage);
-          renderer.render_tetromino(physics.active_piece());
+          renderer.render_tetromino(physics.active_piece(), physics.stage);
         };
 
         var tick = function() {

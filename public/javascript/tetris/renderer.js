@@ -29,11 +29,21 @@ tetris.renderer = function(drawingCanvas) {
     }
   }
 
-  var render_tetromino = function(tetromino) {
-    render_blocks(tetromino.blocks());
+  var render_tetromino = function(tetromino, stage) {
+    render_blocks(tetromino.blocks(), stage);
   };
 
-  var render_blocks = function(blocks) {
+  var render_blocks = function(blocks, stage) {
+    context.save();
+    context.beginPath();
+    context.moveTo(x_offset, y_offset);
+    context.lineTo( x_offset + t(stage.width), y_offset                   );
+    context.lineTo( x_offset + t(stage.width), y_offset + t(stage.height) );
+    context.lineTo( x_offset                 , y_offset + t(stage.height) );
+    context.lineTo( x_offset                 , y_offset                   );
+    context.closePath();
+    context.clip();
+
     context.fillStyle   = '#ff0';
     context.strokeStyle = "#000";
     context.lineWidth   = 2;
@@ -51,13 +61,13 @@ tetris.renderer = function(drawingCanvas) {
         t(1),
         t(1)
       );
-
     }
+
+    context.restore();
   };
 
   return {
     render_stage: render_stage,
-    render_blocks: render_blocks,
     render_tetromino: render_tetromino
   };
 };
